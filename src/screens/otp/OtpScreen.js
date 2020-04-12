@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView, StatusBar, View, Image, TextInput, TouchableOpacity, Alert, Text } from "react-native";
 
-const LoginScreen = ({ navigation }) => {
+const OtpScreen = () => {
   return (
     <>
       <StatusBar hidden={true}/>
@@ -15,17 +15,17 @@ const LoginScreen = ({ navigation }) => {
             backgroundColor: 'white'
           }}
         >
-          <Image source={require('./logo.png')} 
+          <Image source={require('../login/logo.png')} 
           style={{height: undefined, width: "35%", height: "25%", backgroundColor: 'white'}}
           resizeMode="contain"/>
           <View style={{marginBottom: 10, width: "100%"}}>
             <TextInput
             style={{ height: 40, borderColor: '#B53471', borderWidth: 1, borderRadius: 25, width: "50%", marginLeft: "25%", paddingLeft: 25 }}
-            placeholder={"Phone"} placeholderTextColor={"gray"} />
+            placeholder={"OTP"} placeholderTextColor={"gray"} />
           </View>
           <View style={{marginBottom: 10, width: "100%"}}>
             <TouchableOpacity
-            onPress={() => navigation.navigate('OtpScreen')}
+            onPress={() => Alert.alert('OTP Verified!')}
             style={{ height: 40, 
             backgroundColor: '#B53471', 
             borderWidth: 0, 
@@ -44,7 +44,7 @@ const LoginScreen = ({ navigation }) => {
             shadowRadius: 3.84,
             elevation: 5 }}
             >
-              <Text style={{color: 'white'}}>Get OTP</Text>
+              <Text style={{color: 'white'}}>Verify</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -53,4 +53,4 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+export default OtpScreen;
