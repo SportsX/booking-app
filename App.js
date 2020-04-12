@@ -29,6 +29,7 @@ import LoginScreen from './src/screens/login/LoginScreen'
 const App: () => React$Node = () => {
   return (
     <>
+      <StatusBar hidden={true}/>
       <SafeAreaView>
         <LoginScreen />
       </SafeAreaView>
