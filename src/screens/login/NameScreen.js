@@ -1,31 +1,7 @@
-import React, { useState } from "react";
-import { SafeAreaView, StatusBar, View, Image, TextInput, TouchableOpacity, Text } from "react-native";
-import Toast from 'react-native-simple-toast';
+import React from "react";
+import { SafeAreaView, StatusBar, View, Image, TextInput, TouchableOpacity, Alert, Text } from "react-native";
 
-const LoginScreen = ({ navigation }) => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-
-  const sendLogin = () => {
-    fetch('http://10.0.2.2:3000/login', {
-      method: 'POST',
-      headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({phoneNumber: phoneNumber}),
-      })
-      .then(response => {
-        if (response.status == 200) {
-          console.log("OTP Sent!")
-          Toast.show("OTP Sent!")
-          navigation.navigate('OtpScreen')
-        } else {
-          Toast.show("Something went wrong! Please try again.")
-        }
-      })
-      .catch(error => console.error(error))
-  } 
-
+const NameScreen = ({ navigation }) => {
   return (
     <>
       <StatusBar hidden={true}/>
@@ -39,19 +15,17 @@ const LoginScreen = ({ navigation }) => {
             backgroundColor: 'white'
           }}
         >
-          <Image source={require('./logo.png')} 
-          style={{height: undefined, width: "35%", height: "25%", backgroundColor: 'white'}}
+          <Image source={require('./name_tag2.png')} 
+          style={{height: undefined, width: "35%", height: "25%", backgroundColor: 'white', marginBottom: 20}}
           resizeMode="contain"/>
           <View style={{marginBottom: 10, width: "100%"}}>
             <TextInput
-            onChangeText={text => setPhoneNumber(text)}
-            keyboardType='numeric'
             style={{ height: 40, borderColor: '#B53471', borderWidth: 1, borderRadius: 25, width: "50%", marginLeft: "25%", paddingLeft: 25 }}
-            placeholder={"Phone"} placeholderTextColor={"gray"} />
+            placeholder={"Full Name"} placeholderTextColor={"gray"} />
           </View>
           <View style={{marginBottom: 10, width: "100%"}}>
             <TouchableOpacity
-            onPress={sendLogin}
+            onPress={() => navigation.navigate('FlowPickerScreen')}
             style={{ height: 40, 
             backgroundColor: '#B53471', 
             borderWidth: 0, 
@@ -70,7 +44,7 @@ const LoginScreen = ({ navigation }) => {
             shadowRadius: 3.84,
             elevation: 5 }}
             >
-              <Text style={{color: 'white'}}>Get OTP</Text>
+              <Text style={{color: 'white'}}>Save</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -79,4 +53,4 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+export default NameScreen;
