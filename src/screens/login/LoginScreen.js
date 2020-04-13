@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, StatusBar, View, Image, TextInput, TouchableOpacity, Alert, Text } from "react-native";
+import Toast from 'react-native-simple-toast';
 
 const LoginScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -16,7 +17,10 @@ const LoginScreen = ({ navigation }) => {
       .then(response => {
         if (response.status == 200) {
           console.log("OTP Sent!")
+          Toast.show("OTP Sent!")
           navigation.navigate('OtpScreen')
+        } else {
+          Toast.show("Something went wrong! Please try again.")
         }
       })
       .catch(error => console.error(error))
