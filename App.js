@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import LoginScreen from './src/screens/login/LoginScreen'
-import OtpScreen from './src/screens/otp/OtpScreen'
+import OtpScreen from './src/screens/login/OtpScreen'
 
 const Stack = createStackNavigator();
 

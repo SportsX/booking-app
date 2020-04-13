@@ -15,7 +15,7 @@ const OtpScreen = () => {
             backgroundColor: 'white'
           }}
         >
-          <Image source={require('../login/logo.png')} 
+          <Image source={require('./logo.png')} 
           style={{height: undefined, width: "35%", height: "25%", backgroundColor: 'white'}}
           resizeMode="contain"/>
           <View style={{marginBottom: 10, width: "100%"}}>

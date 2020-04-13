@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView, StatusBar, View, Image, TextInput, TouchableOpacity, Alert, Text } from "react-native";
 
 const LoginScreen = ({ navigation }) => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const sendLogin = () => {
+    fetch('http://10.0.2.2:3000/login', {
+      method: 'POST',
+      headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({phoneNumber: phoneNumber}),
+      })
+      .then(response => {
+        if (response.status == 200) {
+          console.log("OTP Sent!")
+          navigation.navigate('OtpScreen')
+        }
+      })
+      .catch(error => console.error(error))
+  } 
+
   return (
     <>
       <StatusBar hidden={true}/>
@@ -20,12 +40,14 @@ const LoginScreen = ({ navigation }) => {
           resizeMode="contain"/>
           <View style={{marginBottom: 10, width: "100%"}}>
             <TextInput
+            onChangeText={text => setPhoneNumber(text)}
+            keyboardType='numeric'
             style={{ height: 40, borderColor: '#B53471', borderWidth: 1, borderRadius: 25, width: "50%", marginLeft: "25%", paddingLeft: 25 }}
             placeholder={"Phone"} placeholderTextColor={"gray"} />
           </View>
           <View style={{marginBottom: 10, width: "100%"}}>
             <TouchableOpacity
-            onPress={() => navigation.navigate('OtpScreen')}
+            onPress={sendLogin}
             style={{ height: 40, 
             backgroundColor: '#B53471', 
             borderWidth: 0, 
