@@ -1,9 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, StatusBar, View, Image, TextInput, TouchableOpacity, Alert, Text } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 
-const NameScreen = ({ route, navigation }) => {
+const NameScreen = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
-  const { userId } = route.params;
+  const [userId, setUserId] = useState('');
+
+  const saveUserId = async userId => {
+    await AsyncStorage.setItem('userId', userId)
+    console.log("Saved userId", userId)
+  };
+
+  const saveFullName = async fullName => {
+    await AsyncStorage.setItem('fullName', fullName)
+    console.log("Saved fullName", fullName)
+  };
+
   const saveName = () => {
     fetch('http://10.0.2.2:3000/api/v1/users/' + userId.toString() + '/update_name', {
       method: 'POST',
@@ -15,13 +27,24 @@ const NameScreen = ({ route, navigation }) => {
       })
       .then(response => {
         if (response.status == 200) {
-          navigation.navigate('FlowPickerScreen', {fullName: fullName})
+          saveUserId(userId.toString())
+          saveFullName(fullName)
+          navigation.navigate('FlowPickerScreen')
         } else {
           Toast.show("Something went wrong! Please try again.")
         }
       })
       .catch(error => console.error(error))
-  } 
+  }
+
+  const getUserIdFromStorage = async () => {
+    const item = await AsyncStorage.getItem('userId')
+    setUserId(parseInt(item))
+  };
+
+  useEffect(() => {
+    getUserIdFromStorage();
+  }, []);
 
   return (
     <>

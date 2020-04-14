@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, ImageBackground, StatusBar, View, Image, TextInput, TouchableOpacity, Alert, Text } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 
-const FlowPickerScreen = ( {route} ) => {
-  const { fullName } = route.params;
+const FlowPickerScreen = ( ) => {
+  const [fullName, setFullName] = useState('');
+
+  const getFullNameFromStorage = async () => {
+    const item = await AsyncStorage.getItem('fullName');
+    console.log("From Storag", item);
+    setFullName(item);
+  };
+
+  useEffect(() => {
+    getFullNameFromStorage();
+  }, []);
+
   return (
     <>
       <StatusBar hidden={true}/>

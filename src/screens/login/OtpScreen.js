@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import { SafeAreaView, StatusBar, View, Image, TextInput, TouchableOpacity, Text } from "react-native";
 import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const OtpScreen = ({ route, navigation }) => {
   const [otp, setOtp] = useState('');
   const { userId } = route.params;
+  
+  const saveUserId = async userId => {
+    await AsyncStorage.setItem('userId', userId)
+    console.log("Saved userId", userId)
+  };
+
+  const saveFullName = async fullName => {
+    await AsyncStorage.setItem('fullName', fullName)
+    console.log("Saved fullName", fullName)
+  };
 
   const sendOtp = () => {
     fetch('http://10.0.2.2:3000/api/v1/users/' + userId.toString() + '/verify_otp', {
@@ -24,9 +35,12 @@ const OtpScreen = ({ route, navigation }) => {
                 console.log("OTP Verified!")
                 Toast.show("OTP Verified!")
                 if (data.full_name == null) {
-                  navigation.navigate('NameScreen', { userId: userId })
+                  saveUserId(userId.toString())
+                  navigation.navigate('NameScreen')
                 } else {
-                  navigation.navigate('FlowPickerScreen', { userId: userId, fullName: data.full_name })
+                  saveUserId(userId.toString())
+                  saveFullName(data.full_name)
+                  navigation.navigate('FlowPickerScreen')
                 }
               } else {
                 console.log("Incorrect OTP!")
@@ -38,7 +52,7 @@ const OtpScreen = ({ route, navigation }) => {
         }
       })
       .catch(error => console.error(error))
-  } 
+  }
 
   return (
     <>

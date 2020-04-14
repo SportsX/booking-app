@@ -1,11 +1,8 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-  SafeAreaView,
-  StatusBar,
-} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import LoginScreen from './src/screens/login/LoginScreen'
 import OtpScreen from './src/screens/login/OtpScreen'
@@ -15,10 +12,25 @@ import FlowPickerScreen from './src/screens/flowPicker/FlowPickerScreen'
 const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
+  const [userId, setUserId] = useState('');
+
+  const getUserIdFromStorage = async () => {
+    const item = await AsyncStorage.getItem('userId')
+    setUserId(parseInt(item))
+  };
+
+  useEffect(() => {
+    getUserIdFromStorage();
+  }, []);
+
+  const getInitialRouteName = () => {
+    userId == null ? "LoginScreen" : "FlowPickerScreen"
+  }
+
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={getInitialRouteName()}>
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="OtpScreen" component={OtpScreen} />
           <Stack.Screen name="NameScreen" component={NameScreen} />
