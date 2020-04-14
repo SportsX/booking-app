@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { SafeAreaView, StatusBar, View, Image, TextInput, TouchableOpacity, Text } from "react-native";
 import Toast from 'react-native-simple-toast';
 
-const OtpScreen = ({ navigation }) => {
+const OtpScreen = ({ route, navigation }) => {
   const [otp, setOtp] = useState('');
+  const { userId } = route.params;
 
   const sendOtp = () => {
-    fetch('http://10.0.2.2:3000/verify_otp', {
+    fetch('http://10.0.2.2:3000/api/v1/users/' + userId.toString() + '/verify_otp', {
       method: 'POST',
       headers: {
       Accept: 'application/json',
@@ -23,9 +24,9 @@ const OtpScreen = ({ navigation }) => {
                 console.log("OTP Verified!")
                 Toast.show("OTP Verified!")
                 if (data.full_name == null) {
-                  navigation.navigate('NameScreen')
+                  navigation.navigate('NameScreen', { userId: userId })
                 } else {
-                  navigation.navigate('FlowPickerScreen')
+                  navigation.navigate('FlowPickerScreen', { userId: userId, fullName: data.full_name })
                 }
               } else {
                 console.log("Incorrect OTP!")

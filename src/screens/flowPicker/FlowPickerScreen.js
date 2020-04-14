@@ -1,7 +1,8 @@
 import React from "react";
 import { SafeAreaView, ImageBackground, StatusBar, View, Image, TextInput, TouchableOpacity, Alert, Text } from "react-native";
 
-const FlowPickerScreen = () => {
+const FlowPickerScreen = ( {route} ) => {
+  const { fullName } = route.params;
   return (
     <>
       <StatusBar hidden={true}/>
@@ -29,6 +30,9 @@ const FlowPickerScreen = () => {
             }}
           >
             <View style={{marginBottom: 40, width: "100%"}}>
+              <Text style={{width: "70%", marginLeft: "15%", color: "lightgray", fontWeight: "100", fontSize: 20, textAlign: "center"}}>
+                Welcome, {fullName}
+              </Text>
               <Text style={{width: "70%", marginLeft: "15%", color: "gray", fontWeight: "200", fontSize: 40, textAlign: "center"}}>
                 What would you like to do?
               </Text>

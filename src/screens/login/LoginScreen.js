@@ -6,19 +6,23 @@ const LoginScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
 
   const sendLogin = () => {
-    fetch('http://10.0.2.2:3000/login', {
+    fetch('http://10.0.2.2:3000/api/v1/login', {
       method: 'POST',
       headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       },
-      body: JSON.stringify({phoneNumber: phoneNumber}),
+      body: JSON.stringify({phone: phoneNumber}),
       })
       .then(response => {
         if (response.status == 200) {
           console.log("OTP Sent!")
           Toast.show("OTP Sent!")
-          navigation.navigate('OtpScreen')
+          response.json()
+          .then(data => {
+            console.log(data.user_id)
+            navigation.navigate('OtpScreen', {userId: data.user_id})
+          })
         } else {
           Toast.show("Something went wrong! Please try again.")
         }
