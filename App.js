@@ -12,29 +12,38 @@ import FlowPickerScreen from './src/screens/flowPicker/FlowPickerScreen'
 const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
-  const [userId, setUserId] = useState('');
+  const [signedInUser, setSignedInUser] = useState('')
 
-  const getUserIdFromStorage = async () => {
+  const readUserStored = async () => {
     const item = await AsyncStorage.getItem('userId')
-    setUserId(parseInt(item))
+    if (item == null) {
+      console.log("No user session")
+    } else { 
+      console.log("user signed in:", item)
+      setSignedInUser(item)
+    } 
   };
 
   useEffect(() => {
-    getUserIdFromStorage();
+    readUserStored();
   }, []);
-
-  const getInitialRouteName = () => {
-    userId == null ? "LoginScreen" : "FlowPickerScreen"
-  }
 
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={getInitialRouteName()}>
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen name="OtpScreen" component={OtpScreen} />
-          <Stack.Screen name="NameScreen" component={NameScreen} />
-          <Stack.Screen name="FlowPickerScreen" component={FlowPickerScreen} />
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          {
+            (signedInUser == null) ? (
+              <>
+                <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                <Stack.Screen name="OtpScreen" component={OtpScreen} />
+                <Stack.Screen name="NameScreen" component={NameScreen} />
+                <Stack.Screen name="FlowPickerScreen" component={FlowPickerScreen} />
+              </>
+            ) : (
+              <Stack.Screen name="FlowPickerScreen" component={FlowPickerScreen} />
+            )
+          }
         </Stack.Navigator>
       </NavigationContainer>
     </>
