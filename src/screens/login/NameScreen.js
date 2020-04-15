@@ -29,7 +29,7 @@ const NameScreen = ({ navigation }) => {
         if (response.status == 200) {
           saveUserId(userId.toString())
           saveFullName(fullName)
-          navigation.navigate('FlowPickerScreen')
+          navigation.navigate('HomeScreen')
         } else {
           Toast.show("Something went wrong! Please try again.")
         }

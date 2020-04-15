@@ -40,7 +40,7 @@ const OtpScreen = ({ route, navigation }) => {
                 } else {
                   saveUserId(userId.toString())
                   saveFullName(data.full_name)
-                  navigation.navigate('FlowPickerScreen')
+                  navigation.navigate('HomeScreen')
                 }
               } else {
                 console.log("Incorrect OTP!")
