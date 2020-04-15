@@ -41,7 +41,7 @@ const App: () => React$Node = () => {
                 <Stack.Screen name="HomeScreen" component={HomeScreen} />
               </>
             ) : (
-              <Stack.Screen name="HomeScreen" component={HomeScreen} />
+              <Stack.Screen name="FlowPickerScreen" component={HomeScreen} />
             )
           }
         </Stack.Navigator>
