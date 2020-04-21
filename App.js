@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import LoginScreen from './src/screens/login/LoginScreen'
 import OtpScreen from './src/screens/login/OtpScreen'
 import NameScreen from './src/screens/login/NameScreen'
-import HomeScreen from './src/screens/flowPicker/HomeScreen'
+import HomeScreen from './src/screens/home/HomeScreen'
 
 const Stack = createStackNavigator();
 
@@ -32,6 +32,7 @@ const App: () => React$Node = () => {
     <>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="SplashScreen" component={SplashScreen} />
           {
             (signedInUser == null) ? (
               <>
@@ -41,7 +42,7 @@ const App: () => React$Node = () => {
                 <Stack.Screen name="HomeScreen" component={HomeScreen} />
               </>
             ) : (
-              <Stack.Screen name="FlowPickerScreen" component={HomeScreen} />
+              <Stack.Screen name="HomeScreen" component={HomeScreen} />
             )
           }
         </Stack.Navigator>
